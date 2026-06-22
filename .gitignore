@@ -7,3 +7,10 @@ desktop.ini
 
 # Local Claude Code config
 .claude/
+
+# Node / Playwright
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

@@ -1,0 +1,12 @@
+{
+  "name": "project-portfolio",
+  "version": "1.0.0",
+  "description": "Leo Nicholas Zotomayor — portfolio site",
+  "private": true,
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.0"
+  }
+}
