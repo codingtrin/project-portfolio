@@ -1,0 +1,10 @@
+# Dev / test tooling — not part of the deployed static site
+node_modules
+tests
+playwright.config.ts
+package.json
+package-lock.json
+test-results
+playwright-report
+design-direction.md
+.gitignore
