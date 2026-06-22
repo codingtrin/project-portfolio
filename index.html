@@ -3,8 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Leo Nicholas Zotomayor — Software Developer &amp; Data Analyst</title>
-<meta name="description" content="Portfolio of Leo Nicholas Zotomayor — building products, platforms, and experiences that create meaningful impact.">
+<title>Leo Nicholas Zotomayor | Portfolio</title>
+<meta name="description" content="Building products, platforms, and experiences that create meaningful impact.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<!-- Open Graph / social sharing.
+     TODO: replace https://leo-zotomayor.vercel.app with the real deployed URL once live. -->
+<meta property="og:title" content="Leo Nicholas Zotomayor | Portfolio">
+<meta property="og:description" content="Building products, platforms, and experiences that create meaningful impact.">
+<meta property="og:image" content="https://leo-zotomayor.vercel.app/images/og-card.png">
+<meta property="og:url" content="https://leo-zotomayor.vercel.app/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://leo-zotomayor.vercel.app/">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,14 +92,16 @@
     display: grid; grid-template-columns: 200px 1fr;
     gap: 48px; align-items: center;
   }
+  /* Anchor the photo to the top of the hero text so it lines up with the name */
+  .hero-photo-wrap { align-self: start; margin-top: 14px; }
   .hero-photo {
-    width: 132px; height: 132px; border-radius: 999px;
+    width: 168px; height: 168px; border-radius: 999px;
     background: rgba(255,255,255,0.06);
-    border: 1.5px dashed rgba(255,255,255,0.22);
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    border: 3px solid rgba(255,255,255,0.14);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.28);
     overflow: hidden;
   }
-  .hero-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 999px; }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 999px; }
   .hero-title-eyebrow {
     display: inline-block; font-size: 12px; font-weight: 600;
     letter-spacing: 0.12em; text-transform: uppercase;
@@ -177,6 +192,8 @@
   .view-live {
     margin-top: auto; padding-top: 16px;
     display: inline-flex; align-items: center; gap: 6px;
+    min-height: 44px;           /* >= 44px thumb tap target */
+    align-self: flex-start;     /* keep the tap area to the text width */
     color: var(--green-700); font-size: 14px; font-weight: 600; text-decoration: none;
     transition: gap 140ms var(--ease), color 140ms var(--ease);
   }
@@ -229,7 +246,7 @@
     display: flex; align-items: center; justify-content: center;
   }
   .edu-icon i { width: 22px; height: 22px; color: var(--green); }
-  .edu-body { flex: 1; }
+  .edu-body { flex: 1; min-width: 0; } /* allow text to shrink/wrap instead of overflowing */
   .edu-body h3 { font-family: var(--font-heading); font-weight: 700; color: var(--navy); font-size: 21px; margin: 0 0 4px; line-height: 1.25; }
   .edu-body p { font-size: 15.5px; color: var(--text-body); margin: 0; }
   .edu-current {
@@ -291,6 +308,7 @@
   @media (max-width: 860px) {
     .hero { padding: 48px 32px; }
     .hero-grid { grid-template-columns: 1fr; text-align: center; }
+    .hero-photo-wrap { align-self: center; margin-top: 0; }
     .hero-photo { margin: 0 auto; }
     .stat-row, .cta-row { justify-content: center; }
     .hero h1 { font-size: 40px; }
@@ -306,11 +324,13 @@
     <div class="hero">
       <div class="hero-grid">
 
-        <!-- Profile photo (drop images/profile.jpg in to replace the placeholder) -->
-        <div style="display: flex; justify-content: center;">
+        <!-- Profile photo -->
+        <div class="hero-photo-wrap" style="display: flex; justify-content: center;">
           <div class="hero-photo">
-            <i data-lucide="user-round" style="width: 28px; height: 28px; color: var(--green);"></i>
-            <span style="font-size: 11px; letter-spacing: 0.04em; color: #B8C4DB;">Profile photo</span>
+            <picture>
+              <source srcset="images/headshot.webp" type="image/webp">
+              <img src="images/headshot.jpg" alt="Portrait of Leo Nicholas Zotomayor" width="600" height="600">
+            </picture>
           </div>
         </div>
 
@@ -328,7 +348,7 @@
 
           <!-- Only CTA on the page -->
           <div class="cta-row" style="display: flex;">
-            <a class="cta" href="/resume.pdf" target="_blank" rel="noopener">
+            <a class="cta" href="assets/resume.pdf" target="_blank" rel="noopener" download="leo-zotomayor-resume.pdf">
               <i data-lucide="download"></i>Download resume
             </a>
           </div>
@@ -368,8 +388,13 @@
         <article id="work-leonistic" class="card">
           <div class="card-media">
             <picture>
-              <source srcset="images/leonistic.vercel.app_.webp" type="image/webp">
-              <img src="images/leonistic.vercel.app_.jpg" alt="Screenshot of the Leonistic live site" loading="lazy" width="1200" height="8295">
+              <source type="image/webp"
+                      srcset="images/leonistic.vercel.app_-600.webp 600w, images/leonistic.vercel.app_-900.webp 900w, images/leonistic.vercel.app_.webp 1200w"
+                      sizes="(min-width:1000px) 360px, (min-width:640px) 45vw, 90vw">
+              <img src="images/leonistic.vercel.app_.jpg"
+                   srcset="images/leonistic.vercel.app_-600.jpg 600w, images/leonistic.vercel.app_-900.jpg 900w, images/leonistic.vercel.app_.jpg 1200w"
+                   sizes="(min-width:1000px) 360px, (min-width:640px) 45vw, 90vw"
+                   alt="Screenshot of the Leonistic live site" loading="lazy" width="1200" height="8295">
             </picture>
           </div>
           <div class="card-body">
@@ -388,8 +413,13 @@
         <article id="work-employmeant" class="card">
           <div class="card-media">
             <picture>
-              <source srcset="images/employmeant.vercel.app_.webp" type="image/webp">
-              <img src="images/employmeant.vercel.app_.jpg" alt="Screenshot of the EmployMeant live site" loading="lazy" width="1200" height="1100">
+              <source type="image/webp"
+                      srcset="images/employmeant.vercel.app_-600.webp 600w, images/employmeant.vercel.app_-900.webp 900w, images/employmeant.vercel.app_.webp 1200w"
+                      sizes="(min-width:1000px) 360px, (min-width:640px) 45vw, 90vw">
+              <img src="images/employmeant.vercel.app_.jpg"
+                   srcset="images/employmeant.vercel.app_-600.jpg 600w, images/employmeant.vercel.app_-900.jpg 900w, images/employmeant.vercel.app_.jpg 1200w"
+                   sizes="(min-width:1000px) 360px, (min-width:640px) 45vw, 90vw"
+                   alt="Screenshot of the EmployMeant live site" loading="lazy" width="1200" height="1100">
             </picture>
           </div>
           <div class="card-body">
@@ -408,8 +438,13 @@
         <article id="work-silogan" class="card">
           <div class="card-media">
             <picture>
-              <source srcset="images/silogan-ni-soma.vercel.app_.webp" type="image/webp">
-              <img src="images/silogan-ni-soma.vercel.app_.jpg" alt="Screenshot of the Silogan ni Soma live site" loading="lazy" width="1200" height="6965">
+              <source type="image/webp"
+                      srcset="images/silogan-ni-soma.vercel.app_-600.webp 600w, images/silogan-ni-soma.vercel.app_-900.webp 900w, images/silogan-ni-soma.vercel.app_.webp 1200w"
+                      sizes="(min-width:1000px) 360px, (min-width:640px) 45vw, 90vw">
+              <img src="images/silogan-ni-soma.vercel.app_.jpg"
+                   srcset="images/silogan-ni-soma.vercel.app_-600.jpg 600w, images/silogan-ni-soma.vercel.app_-900.jpg 900w, images/silogan-ni-soma.vercel.app_.jpg 1200w"
+                   sizes="(min-width:1000px) 360px, (min-width:640px) 45vw, 90vw"
+                   alt="Screenshot of the Silogan ni Soma live site" loading="lazy" width="1200" height="6965">
             </picture>
           </div>
           <div class="card-body">
