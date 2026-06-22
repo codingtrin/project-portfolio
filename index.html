@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leo Nicholas Zotomayor — Software Developer &amp; Data Analyst</title>
+<meta name="description" content="Portfolio of Leo Nicholas Zotomayor — building products, platforms, and experiences that create meaningful impact.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+<style>
+  /* ===== Design tokens (style authority: design-direction.md) ===== */
+  :root {
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+    --navy: #0D1B3D;
+    --green: #16A34A;
+    --green-50: #E8F6EE;
+    --green-700: #15803D;
+
+    --text-body: #1E293B;
+    --text-strong: #0F172A;
+    --slate: #64748B;
+
+    --canvas: #F2F5F9;
+    --surface: #FFFFFF;
+    --surface-sunken: #EDF1F7;
+    --border-subtle: #E2E8F0;
+
+    --max-width: 1200px;
+    --section-pad-y: 72px;     /* consistent vertical section padding */
+    --radius-slab: 28px;
+    --radius-card: 20px;
+    --ease: cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--canvas);
+    font-family: var(--font-body);
+    color: var(--text-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Layout primitives ===== */
+  .shell { max-width: var(--max-width); margin: 0 auto; padding-inline: 24px; }
+  .section { scroll-margin-top: 32px; padding-block: var(--section-pad-y); }
+  /* Subtle hairline separators between stacked sections (not heavy dividers) */
+  .section + .section { border-top: 1px solid var(--border-subtle); }
+
+  .eyebrow {
+    display: block;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 14px;
+  }
+  .h2 {
+    font-family: var(--font-heading); font-weight: 800;
+    color: var(--navy); font-size: 40px; line-height: 1.1;
+    margin: 0 0 36px;
+  }
+
+  /* ===== Hero ===== */
+  .hero-wrap { padding: 28px 24px 0; }
+  .hero {
+    max-width: var(--max-width); margin: 0 auto;
+    background: var(--navy); border-radius: var(--radius-slab);
+    padding: 64px 56px;
+    box-shadow: 0 24px 56px rgba(13,27,61,0.18);
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 48px; align-items: center;
+  }
+  .hero-photo {
+    width: 132px; height: 132px; border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    border: 1.5px dashed rgba(255,255,255,0.22);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    overflow: hidden;
+  }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 999px; }
+  .hero-title-eyebrow {
+    display: inline-block; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: var(--font-heading); font-weight: 800; color: #fff;
+    font-size: 52px; line-height: 1.08; letter-spacing: -0.01em; margin: 0 0 18px;
+  }
+  .hero-tagline {
+    font-family: var(--font-heading); font-style: italic; font-weight: 400;
+    color: #D6DEEE; font-size: 22px; line-height: 1.4; margin: 0 0 28px; max-width: 620px;
+  }
+  .stat-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 34px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(22,163,74,0.12); border: 1px solid rgba(22,163,74,0.32);
+    color: #BFF0CF; font-size: 14px; font-weight: 500;
+    padding: 9px 16px; border-radius: 999px;
+  }
+  .chip i { width: 15px; height: 15px; color: var(--green); }
+
+  .cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--green); color: #fff;
+    font-weight: 600; font-size: 17px; letter-spacing: 0.01em;
+    padding: 15px 28px; border-radius: 10px; text-decoration: none;
+    box-shadow: 0 8px 20px rgba(22,163,74,0.34);
+    transition: filter 140ms var(--ease), transform 140ms var(--ease);
+  }
+  .cta:hover { filter: brightness(0.94); }
+  .cta:active { transform: scale(0.97); }
+  .cta i { width: 18px; height: 18px; }
+
+  /* ===== About ===== */
+  .about-copy { max-width: 760px; display: flex; flex-direction: column; gap: 20px; }
+  .about-copy p { font-size: 19px; line-height: 1.7; margin: 0; color: var(--text-body); text-wrap: pretty; }
+
+  /* ===== Work ===== */
+  /* Mobile: 1 col. Tablet: 2 cols. Desktop: 3 cols. */
+  .work-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+  @media (min-width: 640px)  { .work-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .work-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-card); box-shadow: 0 1px 3px rgba(13,27,61,0.08);
+    overflow: hidden; display: flex; flex-direction: column;
+    transition: transform 180ms var(--ease), box-shadow 180ms var(--ease);
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(13,27,61,0.12); }
+  .card-media {
+    aspect-ratio: 16 / 10; background: var(--surface-sunken);
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  }
+  .card-media-icon {
+    width: 46px; height: 46px; border-radius: 12px; background: rgba(13,27,61,0.06);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card-media-icon i { width: 22px; height: 22px; color: var(--slate); }
+  .card-media span { font-size: 12px; letter-spacing: 0.04em; color: var(--slate); }
+  .card-body { padding: 26px 26px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .card-body h3 { font-family: var(--font-heading); font-weight: 700; color: var(--navy); font-size: 24px; margin: 0; }
+  .card-desc { font-size: 15px; line-height: 1.6; color: var(--text-body); margin: 0; text-wrap: pretty; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+  .tag {
+    display: inline-flex; background: var(--surface-sunken); border: 1px solid var(--border-subtle);
+    color: var(--text-strong); font-size: 12.5px; font-weight: 500;
+    padding: 6px 12px; border-radius: 999px;
+  }
+  .view-live {
+    margin-top: auto; padding-top: 16px;
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--green-700); font-size: 14px; font-weight: 600; text-decoration: none;
+    transition: gap 140ms var(--ease), color 140ms var(--ease);
+  }
+  .view-live i { width: 15px; height: 15px; }
+  .view-live:hover { color: var(--green); gap: 10px; }
+
+  /* ===== Skills ===== */
+  .skills-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+  @media (min-width: 640px)  { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .skills-grid { grid-template-columns: repeat(3, 1fr); } }
+  .skill-card {
+    background: var(--surface); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-card); box-shadow: 0 1px 3px rgba(13,27,61,0.08);
+    padding: 30px 28px;
+  }
+  .skill-head { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+  .skill-icon {
+    width: 40px; height: 40px; border-radius: 12px; background: var(--green-50);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .skill-icon i { width: 20px; height: 20px; color: var(--green); }
+  .skill-head h3 { font-family: var(--font-heading); font-weight: 700; color: var(--navy); font-size: 20px; margin: 0; line-height: 1.2; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 9px; }
+  .skill-tags .tag { font-size: 13.5px; padding: 7px 14px; }
+
+  /* ===== Experience (timeline) ===== */
+  .timeline {
+    position: relative; padding-left: 28px;
+    border-left: 2px solid var(--border-subtle);
+    display: flex; flex-direction: column; gap: 40px;
+  }
+  .tl-item { position: relative; }
+  .tl-dot {
+    position: absolute; left: -37px; top: 4px; width: 16px; height: 16px; border-radius: 999px;
+    background: var(--green); border: 3px solid var(--canvas); box-shadow: 0 0 0 1px var(--green);
+  }
+  .tl-item h3 { font-family: var(--font-heading); font-weight: 700; color: var(--navy); font-size: 22px; margin: 0 0 4px; }
+  .tl-meta { font-size: 14.5px; color: var(--slate); margin: 0 0 12px; }
+  .tl-desc { font-size: 16px; line-height: 1.65; color: var(--text-body); margin: 0; max-width: 760px; text-wrap: pretty; }
+
+  /* ===== Education ===== */
+  .edu-list { display: flex; flex-direction: column; gap: 16px; }
+  .edu-card {
+    background: var(--surface); border: 1px solid var(--border-subtle);
+    border-radius: 16px; box-shadow: 0 1px 3px rgba(13,27,61,0.08);
+    padding: 26px 28px; display: flex; align-items: flex-start; gap: 20px;
+  }
+  .edu-icon {
+    flex: none; width: 46px; height: 46px; border-radius: 12px; background: var(--green-50);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .edu-icon i { width: 22px; height: 22px; color: var(--green); }
+  .edu-body { flex: 1; }
+  .edu-body h3 { font-family: var(--font-heading); font-weight: 700; color: var(--navy); font-size: 21px; margin: 0 0 4px; line-height: 1.25; }
+  .edu-body p { font-size: 15.5px; color: var(--text-body); margin: 0; }
+  .edu-current {
+    flex: none; align-self: center;
+    background: var(--green-50); color: var(--green-700);
+    font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px;
+  }
+
+  /* ===== Footer ===== */
+  .footer-wrap { padding: 0 24px 28px; }
+  .footer {
+    max-width: var(--max-width); margin: 0 auto;
+    background: var(--navy); border-radius: var(--radius-slab);
+    padding: 56px 56px 40px;
+  }
+  .footer-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: start; }
+  @media (min-width: 760px) { .footer-grid { grid-template-columns: 1fr auto; gap: 56px; } }
+  .footer-brand { display: block; font-family: var(--font-heading); font-weight: 700; color: #fff; font-size: 26px; margin-bottom: 8px; }
+  .footer-summary { font-size: 15px; color: #B8C4DB; margin: 0 0 28px; max-width: 360px; line-height: 1.6; }
+  .footer-nav { display: flex; flex-wrap: wrap; gap: 8px 26px; }
+  .footer-nav a {
+    font-size: 14px; color: #D6DEEE; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: color 140ms var(--ease);
+  }
+  .footer-nav a:hover { color: var(--green); }
+  .footer-nav a i { width: 14px; height: 14px; }
+
+  .footer-bottom {
+    margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.12);
+    display: flex; flex-wrap: wrap; gap: 18px 24px; align-items: center; justify-content: space-between;
+  }
+  .copyright { font-size: 13.5px; color: #8A99B8; }
+  /* Arca attribution — the final element on the page */
+  .arca-attribution {
+    display: inline-flex; align-items: center; gap: 12px;
+    text-decoration: none; color: #D6DEEE; font-size: 15px;
+    transition: color 140ms var(--ease);
+  }
+  .arca-attribution img { height: 28px; width: auto; display: block; }
+  .arca-attribution:hover { color: #fff; }
+
+  /* ===== Accessibility floor ===== */
+  a:focus-visible, .cta:focus-visible {
+    outline: 2px solid var(--green); outline-offset: 3px; border-radius: 6px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  /* ===== Responsive (hero/footer stacking) ===== */
+  @media (max-width: 860px) {
+    .hero { padding: 48px 32px; }
+    .hero-grid { grid-template-columns: 1fr; text-align: center; }
+    .hero-photo { margin: 0 auto; }
+    .stat-row, .cta-row { justify-content: center; }
+    .hero h1 { font-size: 40px; }
+    .footer { padding: 44px 32px 36px; }
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- ========== HERO ========== -->
+  <header id="top" class="hero-wrap">
+    <div class="hero">
+      <div class="hero-grid">
+
+        <!-- Profile photo (drop images/profile.jpg in to replace the placeholder) -->
+        <div style="display: flex; justify-content: center;">
+          <div class="hero-photo">
+            <i data-lucide="user-round" style="width: 28px; height: 28px; color: var(--green);"></i>
+            <span style="font-size: 11px; letter-spacing: 0.04em; color: #B8C4DB;">Profile photo</span>
+          </div>
+        </div>
+
+        <!-- Hero copy -->
+        <div>
+          <span class="hero-title-eyebrow">Software developer &amp; data analyst</span>
+          <h1>Leo Nicholas Zotomayor</h1>
+          <p class="hero-tagline">Building products, platforms, and experiences that create meaningful impact.</p>
+
+          <div class="stat-row">
+            <span class="chip"><i data-lucide="award"></i>Arca Week 1 graduate</span>
+            <span class="chip"><i data-lucide="sparkles"></i>AI-empowered developer</span>
+            <span class="chip"><i data-lucide="flame"></i>Relentless learner</span>
+          </div>
+
+          <!-- Only CTA on the page -->
+          <div class="cta-row" style="display: flex;">
+            <a class="cta" href="/resume.pdf" target="_blank" rel="noopener">
+              <i data-lucide="download"></i>Download resume
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+
+    <!-- ========== ABOUT ========== -->
+    <section id="about" class="section">
+      <span class="eyebrow">Introduction</span>
+      <h2 class="h2">About me</h2>
+      <div class="about-copy">
+        <p>I'm Leo Nicholas Zotomayor — a Magna Cum Laude Information Technology graduate, former instructor, and software developer and data analyst. I build practical digital solutions with software, data, business intelligence, and AI to solve real problems and create meaningful value.</p>
+        <p>I'm drawn to work that pairs technology with critical thinking: application development, data-driven decisions, and process improvement. I value continuous learning, clear communication, and user-focused results — and I'm looking for teams where I can grow and contribute to work that matters.</p>
+      </div>
+    </section>
+
+    <!-- ========== WORK ========== -->
+    <section id="work" class="section">
+      <span class="eyebrow">Selected projects</span>
+      <h2 class="h2">Work</h2>
+
+      <div class="work-grid">
+
+        <!-- Leonistic -->
+        <article id="work-leonistic" class="card">
+          <div class="card-media">
+            <div class="card-media-icon"><i data-lucide="image"></i></div>
+            <span>Project screenshot</span>
+          </div>
+          <div class="card-body">
+            <h3>Leonistic</h3>
+            <p class="card-desc">A personal brand platform for software, data, and AI-powered work, built as a modern digital experience.</p>
+            <div class="tag-row">
+              <span class="tag">Branding</span>
+              <span class="tag">Frontend</span>
+              <span class="tag">UX/UI</span>
+              <span class="tag">Deployment</span>
+            </div>
+            <a class="view-live" href="#work-leonistic">View live <i data-lucide="arrow-up-right"></i></a>
+          </div>
+        </article>
+
+        <!-- EmployMeant -->
+        <article id="work-employmeant" class="card">
+          <div class="card-media">
+            <div class="card-media-icon"><i data-lucide="image"></i></div>
+            <span>Project screenshot</span>
+          </div>
+          <div class="card-body">
+            <h3>EmployMeant</h3>
+            <p class="card-desc">A hiring platform where employers and candidates swipe to match, cutting cold applications, spam, and ghosting.</p>
+            <div class="tag-row">
+              <span class="tag">Product Design</span>
+              <span class="tag">Marketplace</span>
+              <span class="tag">Matching</span>
+              <span class="tag">UX</span>
+            </div>
+            <a class="view-live" href="#work-employmeant">View live <i data-lucide="arrow-up-right"></i></a>
+          </div>
+        </article>
+
+        <!-- Silogan ni Soma -->
+        <article id="work-silogan" class="card">
+          <div class="card-media">
+            <div class="card-media-icon"><i data-lucide="image"></i></div>
+            <span>Project screenshot</span>
+          </div>
+          <div class="card-body">
+            <h3>Silogan ni Soma</h3>
+            <p class="card-desc">A restaurant brand reimagining the Filipino silog through Japanese-inspired presentation and experience.</p>
+            <div class="tag-row">
+              <span class="tag">Brand Strategy</span>
+              <span class="tag">Customer Experience</span>
+              <span class="tag">F&amp;B Innovation</span>
+              <span class="tag">Marketing</span>
+            </div>
+            <a class="view-live" href="#work-silogan">View live <i data-lucide="arrow-up-right"></i></a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ========== SKILLS ========== -->
+    <section id="skills" class="section">
+      <span class="eyebrow">Toolkit</span>
+      <h2 class="h2">Skills</h2>
+
+      <div class="skills-grid">
+
+        <div class="skill-card">
+          <div class="skill-head">
+            <div class="skill-icon"><i data-lucide="code-2"></i></div>
+            <h3>Software development</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="tag">Python</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">HTML5</span>
+            <span class="tag">CSS3</span>
+            <span class="tag">PHP</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Git</span>
+            <span class="tag">GitHub</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-head">
+            <div class="skill-icon"><i data-lucide="bar-chart-3"></i></div>
+            <h3>Data analytics &amp; business intelligence</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="tag">SQL</span>
+            <span class="tag">Power BI</span>
+            <span class="tag">Microsoft Excel</span>
+            <span class="tag">Data Visualization</span>
+            <span class="tag">Dashboard Development</span>
+            <span class="tag">BI Reporting</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-head">
+            <div class="skill-icon"><i data-lucide="sparkles"></i></div>
+            <h3>AI, content &amp; digital tools</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="tag">ChatGPT</span>
+            <span class="tag">Claude</span>
+            <span class="tag">Gemini</span>
+            <span class="tag">Perplexity</span>
+            <span class="tag">Technical Documentation</span>
+            <span class="tag">Prompt Engineering</span>
+            <span class="tag">Content Development</span>
+            <span class="tag">Canva</span>
+            <span class="tag">OBS Studio</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== EXPERIENCE ========== -->
+    <section id="experience" class="section">
+      <span class="eyebrow">Track record</span>
+      <h2 class="h2">Experience</h2>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <span class="tl-dot"></span>
+          <h3>University IT instructor</h3>
+          <p class="tl-meta">St. Paul University Surigao  ·  Jul 2025 – Apr 2026</p>
+          <p class="tl-desc">Taught Information Technology subjects including databases, programming, AI, and information security. Led student initiatives as JSIT moderator while developing practical, project-based learning experiences.</p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-dot"></span>
+          <h3>Software developer intern</h3>
+          <p class="tl-meta">City Government of Surigao – MIS Division  ·  Feb 2025 – May 2025</p>
+          <p class="tl-desc">Developed documentation systems and multimedia resources for government operations using Python, web technologies, AI tools, and collaborative development workflows.</p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-dot"></span>
+          <h3>Technical content developer</h3>
+          <p class="tl-meta">Freelance  ·  Sep 2019 – May 2025</p>
+          <p class="tl-desc">Created technical content, documentation, and web-based solutions while applying SEO, structured content systems, and digital communication strategies across multiple projects.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== EDUCATION ========== -->
+    <section id="education" class="section">
+      <span class="eyebrow">Background</span>
+      <h2 class="h2">Education</h2>
+
+      <div class="edu-list">
+        <div class="edu-card">
+          <div class="edu-icon"><i data-lucide="graduation-cap"></i></div>
+          <div class="edu-body">
+            <h3>Bachelor of Science in Information Technology</h3>
+            <p>St. Paul University Surigao · Magna Cum Laude</p>
+          </div>
+        </div>
+
+        <div class="edu-card">
+          <div class="edu-icon"><i data-lucide="graduation-cap"></i></div>
+          <div class="edu-body">
+            <h3>Master of Science in Information Technology</h3>
+            <p>Polytechnic University of the Philippines</p>
+          </div>
+          <span class="edu-current">Current</span>
+        </div>
+
+        <div class="edu-card">
+          <div class="edu-icon"><i data-lucide="graduation-cap"></i></div>
+          <div class="edu-body">
+            <h3>Arca Academy</h3>
+            <p>AI Product Development &amp; Modern Software Workflows</p>
+          </div>
+          <span class="edu-current">Current</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer-wrap">
+    <div class="footer">
+      <div class="footer-grid">
+        <div>
+          <span class="footer-brand">Leo Nicholas Zotomayor</span>
+          <p class="footer-summary">Software developer &amp; data analyst building solutions with software, data, and AI.</p>
+          <nav class="footer-nav" aria-label="Footer">
+            <a href="#top"><i data-lucide="arrow-up"></i>Back to top</a>
+            <a href="#about">About</a>
+            <a href="#work">Work</a>
+            <a href="#skills">Skills</a>
+            <a href="#experience">Experience</a>
+            <a href="#education">Education</a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span class="copyright">© 2026 Leo Nicholas Zotomayor.</span>
+        <!-- Arca attribution: final element on the page -->
+        <a class="arca-attribution" href="https://arca.ph" target="_blank" rel="noopener">
+          <img src="images/arca-logo.png" alt="Arca">
+          <span>Made for Arca.ph</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  // Render Lucide icons once the library loads.
+  (function drawIcons(tries) {
+    if (window.lucide && window.lucide.createIcons) {
+      window.lucide.createIcons();
+    } else if ((tries || 0) < 40) {
+      setTimeout(function () { drawIcons((tries || 0) + 1); }, 100);
+    }
+  })(0);
+</script>
+</body>
+</html>
