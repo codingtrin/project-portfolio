@@ -11,7 +11,7 @@ test('has the correct page title', async ({ page }) => {
 test('hero has exactly one CTA, linking to the resume', async ({ page }) => {
   const cta = page.locator('.cta');
   await expect(cta).toHaveCount(1);
-  await expect(cta).toHaveAttribute('href', 'assets/resume.pdf');
+  await expect(cta).toHaveAttribute('href', 'assets/leo-zotomayor-resume.pdf');
   await expect(cta).toHaveAttribute('target', '_blank');
 });
 
