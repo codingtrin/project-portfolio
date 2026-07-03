@@ -18,7 +18,7 @@ Flat-blocked + editorial-serif. Large rounded navy slabs floating on a light-gra
 
 ## Tone
 
-Tagline (1 sentence): "Building products, platforms, and experiences that create meaningful impact."
+Tagline (1 sentence): "Keeping businesses organized, documented, and running smoothly — with a technical edge."
 
 ## Voice
 
